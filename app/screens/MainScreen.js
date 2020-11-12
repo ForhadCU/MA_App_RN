@@ -1,26 +1,37 @@
-import React, {useContext, useEffect} from 'react';
+import React from 'react';
 import {
-  Button,
   Image,
   SafeAreaView,
   StyleSheet,
   Text,
-  View,
+  View
 } from 'react-native';
-import colors from '../configs/MyColors';
+import FloatingActionButton from '../components/FloatingActionButton';
 // import async from '@react-native-async-storage/async-storage'
 import GrayHorizontalLinne from '../components/GrayHorizontalLine';
+import colors from '../configs/MyColors';
 
 const MainScreen = ({navigation}) => {
   function func() {
     // navigation.navigate('ShagotomScreen');
   }
-
-
-
   return (
     <SafeAreaView style={[styles.container]}>
-      <View style={[styles.card1, styles.shadowEffect]}>
+      <View
+        style={{
+          backgroundColor: colors.primaryColor,
+          height: 56,
+          width: '100%',
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}>
+        <View>
+          <Text style={[styles.textAppBarTitle, {marginLeft: 10}]}>
+            স্বাগতম
+          </Text>
+        </View>
+      </View>
+      <View style={[styles.card1]}>
         <Text style={[styles.textHeading]}>এক নজরে</Text>
         <Text style={[{marginTop: 8, marginBottom: 5}]}>7 সপ্তাহ 0 দিন</Text>
         <GrayHorizontalLinne />
@@ -50,6 +61,36 @@ const MainScreen = ({navigation}) => {
           তৈরি হয়েছে।
         </Text>
       </View>
+
+      {/* <MenuProvider style={{marginTop: 100}}>
+          <Menu>
+            <MenuTrigger>
+              <Image
+                source={require('../assets/menu_verticle.png')}
+                style={[styles.imageMenu]}
+              />
+            </MenuTrigger>
+            <MenuOptions>
+              <MenuOption onSelect={() => alert(`Save`)} text="Save" />
+              <MenuOption onSelect={() => alert(`Delete`)}>
+                <Text style={{color: 'red'}}>Delete</Text>
+              </MenuOption>
+              <MenuOption
+                onSelect={() => alert(`Not called`)}
+                disabled={true}
+                text="Disabled"
+              />
+              <MenuOption onSelect={() => alert(`Save`)} text="Save" />
+            </MenuOptions>
+          </Menu>
+        </MenuProvider> */}
+      <View>
+        <Text>This is text</Text>
+      </View>
+
+      <View style={[styles.floatingActionButton]}>
+        <FloatingActionButton />
+      </View>
     </SafeAreaView>
   );
 };
@@ -60,7 +101,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    alignItems: 'center',
   },
   card1: {
     width: '97%',
@@ -69,6 +109,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.logoTintColor,
     paddingRight: 10,
     paddingLeft: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
     borderRadius: 2.22,
     justifyContent: 'center',
   },
@@ -79,13 +121,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.logoTintColor,
     paddingRight: 10,
     paddingLeft: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
     borderRadius: 2.22,
   },
-  imageBistario: {
-    flex: 1,
-    width: null,
-    height: null,
-    resizeMode: 'contain',
+  floatingActionButton: {
+    position: 'absolute',
+    bottom: 40,
+    right: 40,
   },
   horizontalLine: {
     height: '1%',
@@ -93,6 +136,21 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     backgroundColor: 'rgb(236, 238, 237)',
     alignSelf: 'stretch',
+  },
+  imageBistario: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: 'contain',
+  },
+  imageMenu: {
+    width: 20,
+    height: 20,
+    tintColor: 'black',
+    resizeMode: 'contain',
+    // position: 'absolute',
+    // right: 15,
+    // top: 15,
   },
   shadowEffect: {
     shadowColor: '#000',
@@ -109,4 +167,82 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
+  textAppBarTitle: {
+    color: 'white',
+    fontSize: 24,
+    // position: 'absolute',
+    // left: 35,
+    // top: 12,
+  },
 });
+
+//DropDown Menu
+
+// import React, {Component} from 'react';
+// import {AppRegistry ,Text, View} from 'react-native';
+// import {
+//   Option,
+//   OptionList,
+//   Select,
+//   updatePosition,
+// } from 'react-native-dropdown-latest';
+
+// class MainScreen extends Component {
+//   constructor(props) {
+//     super(props);
+
+//     this.state = {
+//       canada: '',
+//     };
+//   }
+
+//   componentDidMount() {
+//     updatePosition(this.SELECT1);
+//     updatePosition(this.OPTIONLIST);
+//   }
+
+//   _getOptionList() {
+//     return this.OPTIONLIST;
+//   }
+
+//   _canada(province) {
+//     this.setState({
+//       ...this.state,
+//       canada: province,
+//     });
+//   }
+
+//   render() {
+//     return (
+//       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+//         <Select
+//           width={250}
+//           ref="SELECT1"
+//           optionListRef={this._getOptionList.bind(this)}
+//           defaultValue="Select a Province in Canada ..."
+//           onSelect={this._canada.bind(this)}>
+//           <Option>Alberta</Option>
+//           <Option>British Columbia</Option>
+//           <Option>Manitoba</Option>
+//           <Option>New Brunswick</Option>
+//           <Option>Newfoundland and Labrador</Option>
+//           <Option>Northwest Territories</Option>
+//           <Option>Nova Scotia</Option>
+//           <Option>Nunavut</Option>
+//           <Option>Ontario</Option>
+//           <Option>Prince Edward Island</Option>
+//           <Option>Quebec</Option>
+//           <Option>Saskatchewan</Option>
+//           <Option>Yukon</Option>
+//         </Select>
+
+//         <Text>Selected provicne of Canada: {this.state.canada}</Text>
+
+//         <OptionList ref="OPTIONLIST" />
+//       </View>
+//     );
+//   }
+// }
+
+// export default MainScreen;
+// AppRegistry.registerComponent('App', () => App);
