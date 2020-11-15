@@ -1,23 +1,25 @@
-import React, {useState, useEffect, useMemo, useReducer} from 'react';
-import {
-  View,
-  Text,
-  Button,
-  StatusBar,
-  ToolbarAndroidComponent,
-  ActivityIndicator,
-} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator, HeaderTitle} from '@react-navigation/stack';
-import ShagotomScreen from './app/screens/ShagotomScreen';
+import {createStackNavigator} from '@react-navigation/stack';
+import React, {useEffect, useState} from 'react';
+import CustomStatusBar from './app/components/CustomStatusBar';
+import colors from './app/configs/MyColors';
 import Date1Screen from './app/screens/Date1Screen';
 import Date2Screen from './app/screens/Date2Screen';
 import EknojoreScreen from './app/screens/EknojoreScreen';
 import MainScreen from './app/screens/MainScreen';
-import CustomStatusBar from './app/components/CustomStatusBar';
-import colors from './app/configs/MyColors';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import test from './app/screens/test';
+import ShagotomScreen from './app/screens/ShagotomScreen';
+import PragnencyScreen from './app/screens/PragnencyScreen';
+import PurberItihas from './app/screens/PurberItihas';
+import AboutUsScreen from './app/screens/AboutUsScreen';
+import AppSharringScreen from './app/screens/AppSharringScreen';
+import Motamot from './app/screens/Motamot';
+import First from './app/screens/First'
+import Second from './app/screens/Second'
+import Third from './app/screens/Third'
+import Fourth from './app/screens/Fourth'
+import Fifth from './app/screens/Fifth'
+import Sixth from './app/screens/Sixth'
 
 const Stack = createStackNavigator();
 
@@ -80,7 +82,66 @@ function App() {
           <Stack.Screen
             name="MainScreen"
             component={MainScreen}
-            options={{headerTitle: 'স্বাগতম', headerLeft: null}}
+            options={{
+              headerTitle: 'স্বাগতম',
+              headerLeft: null,
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="PragnencyScreen"
+            component={PragnencyScreen}
+            options={{headerShown: true, headerTitle: 'PragnencyScreen'}}
+          />
+          <Stack.Screen
+            name="PurberItihas"
+            component={PurberItihas}
+            options={{headerShown: true, headerTitle: 'PurberItihas'}}
+          />
+          <Stack.Screen
+            name="Motamot"
+            component={Motamot}
+            options={{headerShown: true, headerTitle: 'Motamot'}}
+          />
+          <Stack.Screen
+            name="AppSharringScreen"
+            component={AppSharringScreen}
+            options={{headerShown: true, headerTitle: 'AppSharringScreen'}}
+          />
+          <Stack.Screen
+            name="AboutUsScreen"
+            component={AboutUsScreen}
+            options={{headerShown: true, headerTitle: 'AboutUsScreen'}}
+          />
+          <Stack.Screen
+            name="First"
+            component={First}
+            options={{headerShown: true, headerTitle: 'First'}}
+          />
+          <Stack.Screen
+            name="Second"
+            component={Second}
+            options={{headerShown: true, headerTitle: 'Second'}}
+          />
+          <Stack.Screen
+            name="Third"
+            component={Third}
+            options={{headerShown: true, headerTitle: 'Third'}}
+          />
+          <Stack.Screen
+            name="Fourth"
+            component={Fourth}
+            options={{headerShown: true, headerTitle: 'Fourth'}}
+          />
+          <Stack.Screen
+            name="Fifth"
+            component={Fifth}
+            options={{headerShown: true, headerTitle: 'Fifth'}}
+          />
+          <Stack.Screen
+            name="Sixth"
+            component={Sixth}
+            options={{headerShown: true, headerTitle: 'Sixth'}}
           />
         </Stack.Navigator>
       ) : (
@@ -92,11 +153,66 @@ function App() {
               headerTitle: 'স্বাগতম',
               headerLeft: null,
               headerTintColor: colors.logoTintColor,
-              headerStyle:{
-                backgroundColor: colors.primaryColor
+              headerStyle: {
+                backgroundColor: colors.primaryColor,
               },
-              headerShown: false
+              headerShown: false,
             }}
+          />
+          <Stack.Screen
+            name="PragnencyScreen"
+            component={PragnencyScreen}
+            options={{headerShown: true, headerTitle: 'PragnencyScreen'}}
+          />
+          <Stack.Screen
+            name="PurberItihas"
+            component={PurberItihas}
+            options={{headerShown: true, headerTitle: 'PurberItihas'}}
+          />
+          <Stack.Screen
+            name="Motamot"
+            component={Motamot}
+            options={{headerShown: true, headerTitle: 'Motamot'}}
+          />
+          <Stack.Screen
+            name="AppSharringScreen"
+            component={AppSharringScreen}
+            options={{headerShown: true, headerTitle: 'AppSharringScreen'}}
+          />
+          <Stack.Screen
+            name="AboutUsScreen"
+            component={AboutUsScreen}
+            options={{headerShown: true, headerTitle: 'AboutUsScreen'}}
+          />
+          <Stack.Screen
+            name="First"
+            component={First}
+            options={{headerShown: true, headerTitle: 'First'}}
+          />
+          <Stack.Screen
+            name="Second"
+            component={Second}
+            options={{headerShown: true, headerTitle: 'Second'}}
+          />
+          <Stack.Screen
+            name="Third"
+            component={Third}
+            options={{headerShown: true, headerTitle: 'Third'}}
+          />
+          <Stack.Screen
+            name="Fourth"
+            component={Fourth}
+            options={{headerShown: true, headerTitle: 'Fourth'}}
+          />
+          <Stack.Screen
+            name="Fifth"
+            component={Fifth}
+            options={{headerShown: true, headerTitle: 'Fifth'}}
+          />
+          <Stack.Screen
+            name="Sixth"
+            component={Sixth}
+            options={{headerShown: true, headerTitle: 'Sixth'}}
           />
         </Stack.Navigator>
       )}
@@ -105,13 +221,6 @@ function App() {
 }
 
 export default App;
-
-
-
-
-
-
-
 
 // // import * as React from 'react';
 // // import { Appbar } from 'react-native-paper';

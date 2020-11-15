@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
+  FlatList,
   Image,
+  Modal,
   SafeAreaView,
   StyleSheet,
   Text,
-  View
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
 } from 'react-native';
 import FloatingActionButton from '../components/FloatingActionButton';
 // import async from '@react-native-async-storage/async-storage'
@@ -12,9 +16,61 @@ import GrayHorizontalLinne from '../components/GrayHorizontalLine';
 import colors from '../configs/MyColors';
 
 const MainScreen = ({navigation}) => {
-  function func() {
-    // navigation.navigate('ShagotomScreen');
+  const [isModalShown, setIsModalShown] = useState(false);
+  const [data, setData] = useState([
+    {name: 'প্রেগন্যান্সি শেষ করুন', id: 1},
+    {name: 'পূর্বের ইতিহাস', id: 2},
+    {name: 'এপটি শেয়ার করুন', id: 3},
+    {name: 'মতামত দিন', id: 4},
+    {name: 'About Us', id: 5},
+    {name: 'Dismiss', id: 6},
+  ]);
+
+  // const data = [
+  //   {name: 'প্রেগন্যান্সি শেষ করুন', id: 1},
+  //   {name: 'পূর্বের ইতিহাস', id: 2},
+  //   {name: 'এপটি শেয়ার করুন', id: 3},
+  //   {name: 'মতামত দিন', id: 4},
+  //   {name: 'About Us', id: 5},
+  //   {name: 'Dismiss', id: 6},
+  // ]
+  
+
+
+  function onMenuTouch() {
+    setIsModalShown(true);
   }
+  // function onTouchCancel(){
+  //   setIsModalShown(false)
+  // }
+  function actionOnRow(item) {
+    setIsModalShown(false);
+    switch (item) {
+      case 1:
+        navigation.navigate('PragnencyScreen');
+        break;
+      case 2:
+        navigation.navigate('PurberItihas');
+        break;
+      case 3:
+        navigation.navigate('AppSharringScreen');
+        break;
+      case 4:
+        navigation.navigate('Motamot');
+        break;
+      case 5:
+        navigation.navigate('AboutUsScreen');
+        break;
+      case 6:
+        setIsModalShown(false);
+        break;
+    }
+  }
+  
+  function onTouchEvent(){
+    console.log('Clicked')
+  }
+
   return (
     <SafeAreaView style={[styles.container]}>
       <View
@@ -24,14 +80,23 @@ const MainScreen = ({navigation}) => {
           width: '100%',
           flexDirection: 'row',
           alignItems: 'center',
+          justifyContent: 'space-between',
         }}>
         <View>
-          <Text style={[styles.textAppBarTitle, {marginLeft: 10}]}>
+          <Text style={[styles.textAppBarTitle, {marginLeft: 20}]}>
             স্বাগতম
           </Text>
         </View>
+        <View style={{marginRight: 20}}>
+          <TouchableOpacity onPress={onMenuTouch}>
+            <Image
+              source={require('../assets/menu_verticle.png')}
+              style={[styles.imageMenu]}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
-      <View style={[styles.card1]}>
+      <View style={[styles.card1, styles.shadowEffect]}>
         <Text style={[styles.textHeading]}>এক নজরে</Text>
         <Text style={[{marginTop: 8, marginBottom: 5}]}>7 সপ্তাহ 0 দিন</Text>
         <GrayHorizontalLinne />
@@ -62,35 +127,61 @@ const MainScreen = ({navigation}) => {
         </Text>
       </View>
 
-      {/* <MenuProvider style={{marginTop: 100}}>
-          <Menu>
-            <MenuTrigger>
-              <Image
-                source={require('../assets/menu_verticle.png')}
-                style={[styles.imageMenu]}
-              />
-            </MenuTrigger>
-            <MenuOptions>
-              <MenuOption onSelect={() => alert(`Save`)} text="Save" />
-              <MenuOption onSelect={() => alert(`Delete`)}>
-                <Text style={{color: 'red'}}>Delete</Text>
-              </MenuOption>
-              <MenuOption
-                onSelect={() => alert(`Not called`)}
-                disabled={true}
-                text="Disabled"
-              />
-              <MenuOption onSelect={() => alert(`Save`)} text="Save" />
-            </MenuOptions>
-          </Menu>
-        </MenuProvider> */}
-      <View>
-        <Text>This is text</Text>
-      </View>
-
       <View style={[styles.floatingActionButton]}>
         <FloatingActionButton />
       </View>
+
+      <View>
+        
+      </View>
+
+
+
+
+      {/* Modal */}
+      <Modal visible={isModalShown} transparent={true}>
+        <View style={{flex: 1}}>
+          <View
+            style={[
+              {
+                flex: 1,
+                backgroundColor: '#ffffff',
+                right: 0,
+                top: 5,
+                padding: 10,
+                position: 'absolute',
+                width: '40%',
+              },
+              styles.shadowEffect,
+            ]}>
+            <View style={[{backgroundColor: 'white', flex: 1}]}>
+              <FlatList
+                // onPress={() => {
+                //   setIsModalShown(false);
+                // }}
+                data={data}
+                renderItem={({item}) => (
+                  // <View style={{height: 60, justifyContent: 'center'}}>
+                  //   <Text style={{fontSize: 20, paddingBottom: 20}}>
+                  //     {item.name}
+                  //   </Text>
+                  //   <GrayHorizontalLinne />
+                  // </View>
+                  <TouchableWithoutFeedback
+                    onPress={() => actionOnRow(item.id)}>
+                    <View style={{height: 40, justifyContent: 'center'}}>
+                      <Text style={{fontSize: 16, paddingBottom: 5}}>
+                        {item.name}
+                      </Text>
+                    </View>
+                  </TouchableWithoutFeedback>
+                )}
+                keyExtractor={(item) => item.id.toString()}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -101,6 +192,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+    alignItems: 'center',
+  },
+
+  buttonList: {
+    backgroundColor: 'gray',
   },
   card1: {
     width: '97%',
@@ -130,6 +226,25 @@ const styles = StyleSheet.create({
     bottom: 40,
     right: 40,
   },
+  floatButtonView: {
+    width: 60,
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.primaryColor,
+    borderRadius: 60 / 2,
+  },
+  shadowEffect1: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 5,
+
+  },
   horizontalLine: {
     height: '1%',
     borderBottomColor: 'rgb(236, 238, 237)',
@@ -146,7 +261,7 @@ const styles = StyleSheet.create({
   imageMenu: {
     width: 20,
     height: 20,
-    tintColor: 'black',
+    tintColor: 'white',
     resizeMode: 'contain',
     // position: 'absolute',
     // right: 15,

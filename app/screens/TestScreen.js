@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Text, View } from 'react-native';
 
-const test = () => {
+const TestScreen = () => {
     return (
         <View>
             <Text>This is test Screeen</Text>
@@ -9,4 +9,4 @@ const test = () => {
     );
 }
 
-export default test;
+export default TestScreen;
