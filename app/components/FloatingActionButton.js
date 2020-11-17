@@ -135,10 +135,10 @@ const FloatingActionButton = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <Modal visible={isModalShown} transparent={true}>
+      <Modal visible={isModalShown} transparent={true} animationType="slide">
         <View style={[styles.modalBottomView, styles.shadowEffect1, {}]}>
           <FlatList
-            onPress={() => {}}
+            // onPress={() => {}}
             showsVerticalScrollIndicator={false}
             data={data}
             renderItem={({item}) => (

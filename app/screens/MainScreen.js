@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -10,13 +10,23 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import {openDatabase} from 'react-native-sqlite-storage';
+import Blocks from '../components/Blocks';
 import FloatingActionButton from '../components/FloatingActionButton';
 // import async from '@react-native-async-storage/async-storage'
 import GrayHorizontalLinne from '../components/GrayHorizontalLine';
+import {blocks} from '../configs/allData';
 import colors from '../configs/MyColors';
 
+var mydatabase = openDatabase({name: 'MaAppDatabase.db'});
+//top
+console.log('MainScreen is running...');
 const MainScreen = ({navigation}) => {
+  const today = new Date();
   const [isModalShown, setIsModalShown] = useState(false);
+  const [dueDays, setDueDays] = useState(null);
+  const [runningWeeklyDays, setRunningWeeklyDays] = useState(null);
+  const [runningWeeks, setRunningWeeks] = useState(null);
   const [data, setData] = useState([
     {name: 'প্রেগন্যান্সি শেষ করুন', id: 1},
     {name: 'পূর্বের ইতিহাস', id: 2},
@@ -26,23 +36,68 @@ const MainScreen = ({navigation}) => {
     {name: 'Dismiss', id: 6},
   ]);
 
-  // const data = [
-  //   {name: 'প্রেগন্যান্সি শেষ করুন', id: 1},
-  //   {name: 'পূর্বের ইতিহাস', id: 2},
-  //   {name: 'এপটি শেয়ার করুন', id: 3},
-  //   {name: 'মতামত দিন', id: 4},
-  //   {name: 'About Us', id: 5},
-  //   {name: 'Dismiss', id: 6},
-  // ]
-  
+  // useEffect(() => {
+  //   mydatabase.transaction((tx) => {
+  //     tx.executeSql('SELECT * FROM table_user', [], (tx, results) => {
+  //       for (let i = 0; i < results.rows.length; ++i) {
+  //         // console.log(results.rows.item(i));
+  //         console.log(results.rows.item(i).date_1);
+  //         let tempDate2 = new Date(results.rows.item(i).date_2);
+  //         let tempDate1 = new Date(results.rows.item(i).date_1);
+  //         // console.log(tempDate1.getTime())
+  //         // console.log(tempDate1.getTime - today.getTime())
+  //         let tempDueDays = Math.ceil(
+  //           (tempDate2.getTime() - today.getTime()) / (1000 * 3600 * 24),
+  //         );
+  //         let tempRunningWeeks = Math.floor(
+  //           (today.getTime() - tempDate1.getTime()) / (1000 * 3600 * 24) / 7,
+  //         );
+  //         let tempRunningWeeklyDays = Math.floor(
+  //           ((today.getTime() - tempDate1.getTime()) / (1000 * 3600 * 24)) % 7,
+  //         );
 
+  //         setDueDays(tempDueDays);
+  //         setRunningWeeks(tempRunningWeeks);
+  //         setRunningWeeklyDays(tempRunningWeeklyDays);
+  //       }
+  //     });
+  //   });
+  // }, []);
+
+  function readWeeks() {
+    mydatabase.transaction((tx) => {
+      tx.executeSql('SELECT * FROM table_user', [], (tx, results) => {
+        for (let i = 0; i < results.rows.length; ++i) {
+          // console.log(results.rows.item(i));
+          // console.log(results.rows.item(i).date_1);
+          let tempDate2 = new Date(results.rows.item(i).date_2);
+          let tempDate1 = new Date(results.rows.item(i).date_1);
+          // console.log(tempDate1.getTime())
+          // console.log(tempDate1.getTime - today.getTime())
+          let tempDueDays = Math.ceil(
+            (tempDate2.getTime() - today.getTime()) / (1000 * 3600 * 24),
+          );
+          tempRunningWeeks = Math.floor(
+            (today.getTime() - tempDate1.getTime()) / (1000 * 3600 * 24) / 7,
+          );
+          let tempRunningWeeklyDays = Math.floor(
+            ((today.getTime() - tempDate1.getTime()) / (1000 * 3600 * 24)) % 7,
+          );
+
+          setDueDays(tempDueDays);
+          setRunningWeeks(tempRunningWeeks);
+          setRunningWeeklyDays(tempRunningWeeklyDays);
+        }
+      });
+    });
+
+    return runningWeeks;
+  }
 
   function onMenuTouch() {
     setIsModalShown(true);
   }
-  // function onTouchCancel(){
-  //   setIsModalShown(false)
-  // }
+
   function actionOnRow(item) {
     setIsModalShown(false);
     switch (item) {
@@ -66,9 +121,9 @@ const MainScreen = ({navigation}) => {
         break;
     }
   }
-  
-  function onTouchEvent(){
-    console.log('Clicked')
+
+  function onTouchEvent() {
+    console.log('Clicked');
   }
 
   return (
@@ -96,47 +151,145 @@ const MainScreen = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={[styles.card1, styles.shadowEffect]}>
-        <Text style={[styles.textHeading]}>এক নজরে</Text>
-        <Text style={[{marginTop: 8, marginBottom: 5}]}>7 সপ্তাহ 0 দিন</Text>
-        <GrayHorizontalLinne />
+
+      <View style={[styles.card1, styles.shadowEffect, {flex: 1}]}>
+        <View style={{flex: 1}}>
+          <Text style={[styles.textHeading]}>এক নজরে</Text>
+          <Text style={[{marginTop: 8, marginBottom: 5}]}>
+            {runningWeeks} সপ্তাহ {runningWeeklyDays} দিন
+          </Text>
+          <GrayHorizontalLinne />
+        </View>
         <View
           style={[
             {
+              flex: 1,
               height: '25%',
               marginTop: 5,
               marginBottom: 5,
-              backgroundColor: colors.first_13_weeksColor,
             },
-          ]}></View>
-        <GrayHorizontalLinne />
-        <Text style={[{marginTop: 5}]}>বাকি রয়েছেঃ 231 দিন</Text>
+          ]}>
+          <View style={{flex: 2}}>
+            <View style={{flex: 1, marginBottom: 5, marginTop: 5}}>
+              <Blocks />
+            </View>
+            <View style={{flex: 1}}>
+              {runningWeeks == 0 ? (
+                <View
+                  style={{
+                    height: 15,
+                    width: 7.76,
+                    margin: 1,
+                    backgroundColor: colors.weekIndicatorColor,
+                  }}
+                />
+              ) : (
+                <View style={{opacity: 100}}/>
+              )}
+              <FlatList
+                horizontal={true}
+                data={blocks}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({item}) => {
+                  // if (readWeeks() == 0) {
+                  //   return (
+                  //     <View
+                  //       style={{
+                  //         height: 20,
+                  //         width: 7.76,
+                  //         margin: 1,
+                  //         backgroundColor: item.color,
+                  //       }}
+                  //     />
+                  //   );
+                  // }
+
+                  // if (item.id == 1 && readWeeks() == 0) {
+                  //   return (
+                  //     <View
+                  //       style={{
+                  //         height: 20,
+                  //         width: 7.76,
+                  //         margin: 1,
+                  //         backgroundColor: 'blue',
+                  //       }}
+                  //     />
+                  //   );
+                  // }
+
+                  if (item.id <= readWeeks()) {
+                    return (
+                      <View
+                        style={{
+                          height: 20,
+                          width: 7.76,
+                          margin: 1,
+                          backgroundColor: item.color,
+                        }}
+                      />
+                    );
+                  }
+                  if (item.id == 40) {
+                    return (
+                      <View
+                        style={{
+                          height: 20,
+                          width: 7.76,
+                          margin: 1,
+                          backgroundColor: item.color,
+                        }}
+                      />
+                    );
+                  }
+                }}
+              />
+            </View>
+          </View>
+        </View>
+        <View style={{flex: 0.5}}>
+          <GrayHorizontalLinne />
+          <Text style={[{marginTop: 5}]}>বাকি রয়েছেঃ {dueDays} দিন</Text>
+        </View>
       </View>
-      <View style={[styles.card2, styles.shadowEffect, {marginTop: 10}]}>
-        <Text style={[styles.textHeading]}>সাপ্তাহিক পরিবর্তন</Text>
-        <Text style={[{marginTop: 8, marginBottom: 5}]}>7 সপ্তাহ 0 দিন</Text>
-        <View style={[styles.horizontalLine]} />
-        <Image
-          style={[styles.imageBistario]}
-          source={require('../assets/bistarito.jpg')}
-        />
-        <View style={[styles.horizontalLine]} />
-        <Text style={[{marginTop: 5}, {color: 'gray'}]}>
-          শিশুটি এখনও শীমের বিচির মত। তার আঙ্গুল, পায়ের পাতা, শাসনালী ও জননাঙ্গ
-          তৈরি হয়েছে।
-        </Text>
+
+      <View
+        style={[styles.card2, styles.shadowEffect, {marginTop: 10, flex: 3}]}>
+        <View style={{flex: 0.7}}>
+          <View style={{flex: 1}}>
+            <Text style={[styles.textHeading]}>সাপ্তাহিক পরিবর্তন</Text>
+            <Text style={[{marginTop: 5, marginBottom: 2}]}>
+              {runningWeeks} সপ্তাহ {runningWeeklyDays} দিন
+            </Text>
+          </View>
+          <View style={[styles.horizontalLine, {flex: 0.01}]} />
+        </View>
+        <View
+          style={{
+            flex: 3,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'lightblue',
+          }}>
+          <Image
+            style={[styles.imageBistario]}
+            source={require('../assets/bistarito.jpg')}
+          />
+        </View>
+
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <View style={[styles.horizontalLine, {flex: 0.01}]} />
+          <Text style={[{marginTop: 5, color: 'gray', flex: 2}]}>
+            শিশুটি এখনও শীমের বিচির মত। তার আঙ্গুল, পায়ের পাতা, শাসনালী ও
+            জননাঙ্গ তৈরি হয়েছে।
+          </Text>
+        </View>
       </View>
+
+      <View style={{flex: 2, backgroundColor: 'blue'}}></View>
 
       <View style={[styles.floatingActionButton]}>
         <FloatingActionButton />
       </View>
-
-      <View>
-        
-      </View>
-
-
-
 
       {/* Modal */}
       <Modal visible={isModalShown} transparent={true}>
@@ -161,12 +314,6 @@ const MainScreen = ({navigation}) => {
                 // }}
                 data={data}
                 renderItem={({item}) => (
-                  // <View style={{height: 60, justifyContent: 'center'}}>
-                  //   <Text style={{fontSize: 20, paddingBottom: 20}}>
-                  //     {item.name}
-                  //   </Text>
-                  //   <GrayHorizontalLinne />
-                  // </View>
                   <TouchableWithoutFeedback
                     onPress={() => actionOnRow(item.id)}>
                     <View style={{height: 40, justifyContent: 'center'}}>
@@ -217,8 +364,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.logoTintColor,
     paddingRight: 10,
     paddingLeft: 10,
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: 2,
+    paddingBottom: 2,
     borderRadius: 2.22,
   },
   floatingActionButton: {
@@ -243,20 +390,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 5,
-
   },
   horizontalLine: {
-    height: '1%',
+    // height: 1,
     borderBottomColor: 'rgb(236, 238, 237)',
     borderBottomWidth: 1,
     backgroundColor: 'rgb(236, 238, 237)',
     alignSelf: 'stretch',
   },
   imageBistario: {
-    flex: 1,
-    width: null,
-    height: null,
-    resizeMode: 'contain',
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
   imageMenu: {
     width: 20,
@@ -278,7 +423,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   textHeading: {
-    color: colors.last_13_weeksColor,
+    color: colors.final_13_weeksColor,
     fontSize: 20,
     fontWeight: 'bold',
   },
