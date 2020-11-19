@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
+  Alert,
   FlatList,
   Image,
   Modal,
@@ -15,87 +16,43 @@ import Blocks from '../components/Blocks';
 import FloatingActionButton from '../components/FloatingActionButton';
 // import async from '@react-native-async-storage/async-storage'
 import GrayHorizontalLinne from '../components/GrayHorizontalLine';
-import {blocks} from '../configs/allData';
+import {blocks, menuList, songsList} from '../configs/allData';
 import colors from '../configs/MyColors';
+import Sound from 'react-native-sound';
 
 var mydatabase = openDatabase({name: 'MaAppDatabase.db'});
-//top
+//ttt
 console.log('MainScreen is running...');
 const MainScreen = ({navigation}) => {
   const today = new Date();
-  const [isModalShown, setIsModalShown] = useState(false);
+
+  const [date1, setDate1] = useState(null);
+  const [date2, setDate2] = useState(null);
   const [dueDays, setDueDays] = useState(null);
   const [runningWeeklyDays, setRunningWeeklyDays] = useState(null);
   const [runningWeeks, setRunningWeeks] = useState(null);
-  const [data, setData] = useState([
-    {name: 'প্রেগন্যান্সি শেষ করুন', id: 1},
-    {name: 'পূর্বের ইতিহাস', id: 2},
-    {name: 'এপটি শেয়ার করুন', id: 3},
-    {name: 'মতামত দিন', id: 4},
-    {name: 'About Us', id: 5},
-    {name: 'Dismiss', id: 6},
-  ]);
+  const [isModalShown, setIsModalShown] = useState(false);
+  // const [name, setName] = useState(songsName());
 
-  // useEffect(() => {
-  //   mydatabase.transaction((tx) => {
-  //     tx.executeSql('SELECT * FROM table_user', [], (tx, results) => {
-  //       for (let i = 0; i < results.rows.length; ++i) {
-  //         // console.log(results.rows.item(i));
-  //         console.log(results.rows.item(i).date_1);
-  //         let tempDate2 = new Date(results.rows.item(i).date_2);
-  //         let tempDate1 = new Date(results.rows.item(i).date_1);
-  //         // console.log(tempDate1.getTime())
-  //         // console.log(tempDate1.getTime - today.getTime())
-  //         let tempDueDays = Math.ceil(
-  //           (tempDate2.getTime() - today.getTime()) / (1000 * 3600 * 24),
-  //         );
-  //         let tempRunningWeeks = Math.floor(
-  //           (today.getTime() - tempDate1.getTime()) / (1000 * 3600 * 24) / 7,
-  //         );
-  //         let tempRunningWeeklyDays = Math.floor(
-  //           ((today.getTime() - tempDate1.getTime()) / (1000 * 3600 * 24)) % 7,
-  //         );
+  var microphonClickCounter = 0;
+  var sound = new Sound(songsName());
 
-  //         setDueDays(tempDueDays);
-  //         setRunningWeeks(tempRunningWeeks);
-  //         setRunningWeeklyDays(tempRunningWeeklyDays);
-  //       }
-  //     });
-  //   });
-  // }, []);
-
-  function readWeeks() {
-    mydatabase.transaction((tx) => {
-      tx.executeSql('SELECT * FROM table_user', [], (tx, results) => {
-        for (let i = 0; i < results.rows.length; ++i) {
-          // console.log(results.rows.item(i));
-          // console.log(results.rows.item(i).date_1);
-          let tempDate2 = new Date(results.rows.item(i).date_2);
-          let tempDate1 = new Date(results.rows.item(i).date_1);
-          // console.log(tempDate1.getTime())
-          // console.log(tempDate1.getTime - today.getTime())
-          let tempDueDays = Math.ceil(
-            (tempDate2.getTime() - today.getTime()) / (1000 * 3600 * 24),
-          );
-          tempRunningWeeks = Math.floor(
-            (today.getTime() - tempDate1.getTime()) / (1000 * 3600 * 24) / 7,
-          );
-          let tempRunningWeeklyDays = Math.floor(
-            ((today.getTime() - tempDate1.getTime()) / (1000 * 3600 * 24)) % 7,
-          );
-
-          setDueDays(tempDueDays);
-          setRunningWeeks(tempRunningWeeks);
-          setRunningWeeklyDays(tempRunningWeeklyDays);
-        }
-      });
-    });
-
-    return runningWeeks;
+  function onPlay() {
+    if (microphonClickCounter % 2 == 0) {
+      sound.play();
+    } else {
+      sound.stop();
+    }
+    microphonClickCounter++;
   }
-
-  function onMenuTouch() {
-    setIsModalShown(true);
+  function songsName() {
+    if (runningWeeks == null) {
+      return 'empty';
+    } else if (runningWeeks < 2) {
+      return 'empty';
+    } else {
+      return songsList[runningWeeks].name;
+    }
   }
 
   function actionOnRow(item) {
@@ -122,12 +79,42 @@ const MainScreen = ({navigation}) => {
     }
   }
 
-  function onTouchEvent() {
-    console.log('Clicked');
+  function readWeeks() {
+    mydatabase.transaction((tx) => {
+      tx.executeSql('SELECT * FROM table_user', [], (tx, results) => {
+        for (let i = 0; i < results.rows.length; ++i) {
+          // console.log(results.rows.item(i));
+          let tempDate2 = new Date(results.rows.item(i).date_2);
+          let tempDate1 = new Date(results.rows.item(i).date_1);
+          // console.log(tempDate1.getTime())
+          // console.log(tempDate1.getTime - today.getTime())
+          let tempDueDays = Math.ceil(
+            (tempDate2.getTime() - today.getTime()) / (1000 * 3600 * 24),
+          );
+          let tempRunningWeeks = Math.floor(
+            (today.getTime() - tempDate1.getTime()) / (1000 * 3600 * 24) / 7,
+          );
+          let tempRunningWeeklyDays = Math.floor(
+            ((today.getTime() - tempDate1.getTime()) / (1000 * 3600 * 24)) % 7,
+          );
+          setDate1(tempDate1.toDateString());
+          setDueDays(tempDueDays);
+          setRunningWeeks(tempRunningWeeks);
+          setRunningWeeklyDays(tempRunningWeeklyDays);
+        }
+      });
+    });
+
+    return runningWeeks;
   }
 
+  function onMenuTouch() {
+    setIsModalShown(true);
+  }
+  console.log('log');
   return (
     <SafeAreaView style={[styles.container]}>
+      {/* ActionBar */}
       <View
         style={{
           backgroundColor: colors.primaryColor,
@@ -142,16 +129,24 @@ const MainScreen = ({navigation}) => {
             স্বাগতম
           </Text>
         </View>
-        <View style={{marginRight: 20}}>
-          <TouchableOpacity onPress={onMenuTouch}>
+        <TouchableOpacity onPress={() => onMenuTouch()}>
+          <View
+            style={{
+              marginRight: 0,
+              height: 50,
+              width: 50,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
             <Image
               source={require('../assets/menu_verticle.png')}
               style={[styles.imageMenu]}
             />
-          </TouchableOpacity>
-        </View>
+          </View>
+        </TouchableOpacity>
       </View>
 
+      {/* Eknojore View */}
       <View style={[styles.card1, styles.shadowEffect, {flex: 1}]}>
         <View style={{flex: 1}}>
           <Text style={[styles.textHeading]}>এক নজরে</Text>
@@ -184,39 +179,13 @@ const MainScreen = ({navigation}) => {
                   }}
                 />
               ) : (
-                <View style={{opacity: 100}}/>
+                <View style={{opacity: 100}} />
               )}
               <FlatList
                 horizontal={true}
                 data={blocks}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({item}) => {
-                  // if (readWeeks() == 0) {
-                  //   return (
-                  //     <View
-                  //       style={{
-                  //         height: 20,
-                  //         width: 7.76,
-                  //         margin: 1,
-                  //         backgroundColor: item.color,
-                  //       }}
-                  //     />
-                  //   );
-                  // }
-
-                  // if (item.id == 1 && readWeeks() == 0) {
-                  //   return (
-                  //     <View
-                  //       style={{
-                  //         height: 20,
-                  //         width: 7.76,
-                  //         margin: 1,
-                  //         backgroundColor: 'blue',
-                  //       }}
-                  //     />
-                  //   );
-                  // }
-
                   if (item.id <= readWeeks()) {
                     return (
                       <View
@@ -252,16 +221,42 @@ const MainScreen = ({navigation}) => {
         </View>
       </View>
 
+      {/* ShaptahikPoribornton View */}
       <View
         style={[styles.card2, styles.shadowEffect, {marginTop: 10, flex: 3}]}>
         <View style={{flex: 0.7}}>
-          <View style={{flex: 1}}>
-            <Text style={[styles.textHeading]}>সাপ্তাহিক পরিবর্তন</Text>
-            <Text style={[{marginTop: 5, marginBottom: 2}]}>
-              {runningWeeks} সপ্তাহ {runningWeeklyDays} দিন
-            </Text>
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <View style={{flex: 6}}>
+              <Text style={[styles.textHeading]}>সাপ্তাহিক পরিবর্তন</Text>
+              <Text style={[{marginTop: 5, marginBottom: 2}]}>
+                {runningWeeks} সপ্তাহ {runningWeeklyDays} দিন
+              </Text>
+            </View>
+            {/* <View
+                  style={{
+                    flex: 2,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor:'green'
+                  }}> */}
+            <TouchableOpacity onPress={() => onPlay()}>
+              <View
+                style={{
+                  height: '100%',
+                  width: 60,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={require('../assets/icon_microphone.png')}
+                  style={[styles.iconMicrophone]}
+                />
+              </View>
+              {/* <Text>text</Text> */}
+            </TouchableOpacity>
+            {/* </View> */}
           </View>
-          <View style={[styles.horizontalLine, {flex: 0.01}]} />
+          <View style={[styles.horizontalLine, {flex: 0.04}]} />
         </View>
         <View
           style={{
@@ -271,22 +266,25 @@ const MainScreen = ({navigation}) => {
             backgroundColor: 'lightblue',
           }}>
           <Image
-            style={[styles.imageBistario]}
+            style={[styles.imageBistarito]}
             source={require('../assets/bistarito.jpg')}
           />
         </View>
 
-        <View style={{flex: 1, justifyContent: 'center'}}>
-          <View style={[styles.horizontalLine, {flex: 0.01}]} />
-          <Text style={[{marginTop: 5, color: 'gray', flex: 2}]}>
+        <View
+          style={{flex: 0.65, justifyContent: 'center', alignItems: 'center'}}>
+          <View style={[styles.horizontalLine, {flex: 1}]} />
+          <Text style={[{marginTop: 5, color: 'gray', flex: 20}]}>
             শিশুটি এখনও শীমের বিচির মত। তার আঙ্গুল, পায়ের পাতা, শাসনালী ও
             জননাঙ্গ তৈরি হয়েছে।
           </Text>
         </View>
       </View>
 
+      {/* EmptyView */}
       <View style={{flex: 2, backgroundColor: 'blue'}}></View>
 
+      {/* Floating Button */}
       <View style={[styles.floatingActionButton]}>
         <FloatingActionButton />
       </View>
@@ -312,7 +310,7 @@ const MainScreen = ({navigation}) => {
                 // onPress={() => {
                 //   setIsModalShown(false);
                 // }}
-                data={data}
+                data={menuList}
                 renderItem={({item}) => (
                   <TouchableWithoutFeedback
                     onPress={() => actionOnRow(item.id)}>
@@ -334,6 +332,8 @@ const MainScreen = ({navigation}) => {
 };
 
 export default MainScreen;
+
+// //key : sss
 
 const styles = StyleSheet.create({
   container: {
@@ -370,8 +370,8 @@ const styles = StyleSheet.create({
   },
   floatingActionButton: {
     position: 'absolute',
-    bottom: 40,
-    right: 40,
+    bottom: 16,
+    right: 16,
   },
   floatButtonView: {
     width: 60,
@@ -398,7 +398,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(236, 238, 237)',
     alignSelf: 'stretch',
   },
-  imageBistario: {
+  imageBistarito: {
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
@@ -411,6 +411,12 @@ const styles = StyleSheet.create({
     // position: 'absolute',
     // right: 15,
     // top: 15,
+  },
+  iconMicrophone: {
+    resizeMode: 'contain',
+    tintColor: colors.primaryColor,
+    height: 25,
+    width: 25,
   },
   shadowEffect: {
     shadowColor: '#000',
@@ -436,73 +442,17 @@ const styles = StyleSheet.create({
   },
 });
 
-//DropDown Menu
-
-// import React, {Component} from 'react';
-// import {AppRegistry ,Text, View} from 'react-native';
-// import {
-//   Option,
-//   OptionList,
-//   Select,
-//   updatePosition,
-// } from 'react-native-dropdown-latest';
-
-// class MainScreen extends Component {
-//   constructor(props) {
-//     super(props);
-
-//     this.state = {
-//       canada: '',
-//     };
-//   }
-
-//   componentDidMount() {
-//     updatePosition(this.SELECT1);
-//     updatePosition(this.OPTIONLIST);
-//   }
-
-//   _getOptionList() {
-//     return this.OPTIONLIST;
-//   }
-
-//   _canada(province) {
-//     this.setState({
-//       ...this.state,
-//       canada: province,
-//     });
-//   }
-
-//   render() {
-//     return (
-//       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-//         <Select
-//           width={250}
-//           ref="SELECT1"
-//           optionListRef={this._getOptionList.bind(this)}
-//           defaultValue="Select a Province in Canada ..."
-//           onSelect={this._canada.bind(this)}>
-//           <Option>Alberta</Option>
-//           <Option>British Columbia</Option>
-//           <Option>Manitoba</Option>
-//           <Option>New Brunswick</Option>
-//           <Option>Newfoundland and Labrador</Option>
-//           <Option>Northwest Territories</Option>
-//           <Option>Nova Scotia</Option>
-//           <Option>Nunavut</Option>
-//           <Option>Ontario</Option>
-//           <Option>Prince Edward Island</Option>
-//           <Option>Quebec</Option>
-//           <Option>Saskatchewan</Option>
-//           <Option>Yukon</Option>
-//         </Select>
-
-//         <Text>Selected provicne of Canada: {this.state.canada}</Text>
-
-//         <OptionList ref="OPTIONLIST" />
-//       </View>
-//     );
-//   }
+// import React from 'react';
+// import { View, Text, StyleSheet } from 'react-native';
+// import colors from '../configs/MyColors'
+// console.log('MainScreen is running..')
+// const MainScreen = () => {
+//   console.log('log')
+//   return (
+//     <View>
+//       <Text>MainScreen</Text>
+//     </View>
+//   );
 // }
 
 // export default MainScreen;
-// AppRegistry.registerComponent('App', () => App);

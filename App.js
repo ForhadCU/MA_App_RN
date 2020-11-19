@@ -14,12 +14,12 @@ import PurberItihas from './app/screens/PurberItihas';
 import AboutUsScreen from './app/screens/AboutUsScreen';
 import AppSharringScreen from './app/screens/AppSharringScreen';
 import Motamot from './app/screens/Motamot';
-import First from './app/screens/First'
-import Second from './app/screens/Second'
-import Third from './app/screens/Third'
-import Fourth from './app/screens/Fourth'
-import Fifth from './app/screens/Fifth'
-import Sixth from './app/screens/Sixth'
+import First from './app/screens/First';
+import Second from './app/screens/Second';
+import Third from './app/screens/Third';
+import Fourth from './app/screens/Fourth';
+import Fifth from './app/screens/Fifth';
+import Sixth from './app/screens/Sixth';
 
 const Stack = createStackNavigator();
 
@@ -51,7 +51,8 @@ function App() {
   //     </View>
   //   );
   // }
-  console.log('userToken :' + userToken + '  type: ' + typeof userToken);
+  // console.log('userToken :' + userToken + '  type: ' + typeof userToken);
+  console.log('App.js is running....');
 
   return (
     <NavigationContainer>
@@ -145,7 +146,7 @@ function App() {
           />
         </Stack.Navigator>
       ) : (
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="MainScreen">
           <Stack.Screen
             name="MainScreen"
             component={MainScreen}

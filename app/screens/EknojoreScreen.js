@@ -11,7 +11,7 @@ import {openDatabase} from 'react-native-sqlite-storage';
 import CropHorizontal from '../components/CropHorizontalLine';
 import HorizontalLine from '../components/HorizontalLine';
 import color from '../configs/MyColors';
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 var mydatabase = openDatabase({name: 'MaAppDatabase.db'});
 
@@ -29,7 +29,6 @@ const EknojoreScreen = ({navigation}) => {
   const [dueDays, setDueDays] = useState('');
   const [dueWeeks, setDueWeeks] = useState('');
   const [totalDueDays, setTotalDueDays] = useState('');
-
 
   useEffect(() => {
     mydatabase.transaction((tx) => {
@@ -80,12 +79,11 @@ const EknojoreScreen = ({navigation}) => {
     // const saveToStorage = async() =>  {
     //   await AsyncStorage.setItem( '@data1', JSON.stringify({_W: 'loggedIn'}))
     //   console.log('Save to storage Done!')
-    // }  
-      const saveToStorage = async() =>  {
-      await AsyncStorage.setItem( '@data1', 'loggedIn')
-      console.log('Save to storage Done!')
-    }
-
+    // }
+    const saveToStorage = async () => {
+      await AsyncStorage.setItem('@data1', 'loggedIn');
+      console.log('Save to storage Done!');
+    };
   }
   return (
     <SafeAreaView style={[styles.container]}>
@@ -111,13 +109,29 @@ const EknojoreScreen = ({navigation}) => {
 
       <HorizontalLine />
       <View style={[styles.containerRightBottom]}>
-        <TouchableOpacity onPress={goToFinish}>
-          <Text style={[styles.buttonNextText]}>সংরক্ষণ</Text>
+        <TouchableOpacity onPress={() => goToFinish()}>
+          <View
+            style={{
+              height: 50,
+              width: 90,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text style={[styles.buttonNextText]}>সংরক্ষণ</Text>
+          </View>
         </TouchableOpacity>
       </View>
       <View style={[styles.containerLeftBottom]}>
         <TouchableOpacity onPress={goToBack}>
-          <Text style={[styles.buttonPreviousText]}>পূর্ববর্তী</Text>
+          <View
+            style={{
+              height: 50,
+              width: 90,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text style={[styles.buttonPreviousText]}>পূর্ববর্তী</Text>
+          </View>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -144,13 +158,13 @@ const styles = StyleSheet.create({
   },
   containerRightBottom: {
     position: 'absolute',
-    bottom: 18,
-    right: 25,
+    bottom: 0,
+    right: 0,
   },
   containerLeftBottom: {
     position: 'absolute',
-    bottom: 18,
-    left: 25,
+    bottom: 0,
+    left: 0,
   },
   datePickerLogo: {
     width: 120,

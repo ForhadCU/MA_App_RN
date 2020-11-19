@@ -109,12 +109,18 @@ const Date2Screen = ({navigation}) => {
       <HorizontalLine />
       <View style={[styles.containerRightBottom]}>
         <TouchableOpacity onPress={goToNext}>
+          <View style={{height: 50, width: 90, justifyContent: 'center', alignItems: 'center'}}> 
+
           <Text style={[styles.buttonNextText]}>পরবর্তী</Text>
+          </View>
         </TouchableOpacity>
       </View>
       <View style={[styles.containerLeftBottom]}>
         <TouchableOpacity onPress={goToBack}>
+          <View style={{height: 50, width: 90, justifyContent: 'center', alignItems: 'center'}}>
+
           <Text style={[styles.buttonPreviousText]}>পূর্ববর্তী</Text>
+          </View>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -141,13 +147,13 @@ const styles = StyleSheet.create({
   },
   containerRightBottom: {
     position: 'absolute',
-    bottom: 18,
-    right: 25,
+    bottom: 0,
+    right: 0,
   },
   containerLeftBottom: {
     position: 'absolute',
-    bottom: 18,
-    left: 25,
+    bottom: 0,
+    left: 0,
   },
   datePickerLogo: {
     width: 70,

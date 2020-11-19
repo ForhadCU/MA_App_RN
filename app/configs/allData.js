@@ -1,5 +1,81 @@
 import colors from '../configs/MyColors';
 
+export const menuList = [
+  {name: 'প্রেগন্যান্সি শেষ করুন', id: 1},
+  {name: 'পূর্বের ইতিহাস', id: 2},
+  {name: 'এপটি শেয়ার করুন', id: 3},
+  {name: 'মতামত দিন', id: 4},
+  {name: 'About Us', id: 5},
+  {name: 'Dismiss', id: 6},
+];
+
+export const currentData = [
+  {id: 1, text: 'One week running..', audioName: ''},
+  {id: 2, text: 'One week running..'},
+  {id: 1, text: 'One week running..'},
+  {id: 1, text: 'One week running..'},
+  {id: 1, text: 'One week running..'},
+  {id: 1, text: 'One week running..'},
+  {id: 1, text: 'One week running..'},
+  {id: 1, text: 'One week running..'},
+  {id: 1, text: 'One week running..'},
+  {id: 1, text: 'One week running..'},
+  {id: 1, text: 'One week running..'},
+  {id: 1, text: 'One week running..'},
+  {id: 1, text: 'One week running..'},
+  {id: 1, text: 'One week running..'},
+  {id: 1, text: 'One week running..'},
+  {id: 1, text: 'One week running..'},
+  {id: 1, text: 'One week running..'},
+  {id: 1, text: 'One week running..'},
+];
+
+export const songsList = [
+  {id: 0, name: 'mysong2.mp3'},
+  {id: 1, name: 'mysong1.mp3'},
+  {id: 2, name: 'mysong2.mp3'},
+  {id: 3, name: 'mysong1.mp3'},
+  {id: 4, name: 'mysong2.mp3'},
+  {id: 5, name: 'mysong1.mp3'},
+  {id: 6, name: 'mysong2.mp3'},
+  {id: 7, name: 'mysong1.mp3'},
+  {id: 8, name: 'mysong2.mp3'},
+  {id: 9, name: 'mysong1.mp3'},
+  {id: 10, name: 'mysong2.mp3'},
+  {id: 11, name: 'mysong1.mp3'},
+  {id: 12, name: 'mysong2.mp3'},
+  {id: 13, name: 'mysong1.mp3'},
+
+
+  {id: 14, name: 'mysong2.mp3'},
+  {id: 15, name: 'mysong1.mp3'},
+  {id: 16, name: 'mysong2.mp3'},
+  {id: 17, name: 'mysong1.mp3'},
+  {id: 18, name: 'mysong2.mp3'},
+  {id: 19, name: 'mysong1.mp3'},
+  {id: 20, name: 'mysong2.mp3'},
+  {id: 21, name: 'mysong1.mp3'},
+  {id: 22, name: 'mysong2.mp3'},
+  {id: 23, name: 'mysong1.mp3'},
+  {id: 24, name: 'mysong2.mp3'},
+  {id: 25, name: 'mysong1.mp3'},
+  {id: 26, name: 'mysong2.mp3'},
+
+  {id: 27, name: 'mysong1.mp3'},
+  {id: 28, name: 'mysong2.mp3'},
+  {id: 29, name: 'mysong1.mp3'},
+  {id: 30, name: 'mysong2.mp3'},
+  {id: 31, name: 'mysong1.mp3'},
+  {id: 32, name: 'mysong2.mp3'},
+  {id: 33, name: 'mysong1.mp3'},
+  {id: 34, name: 'mysong2.mp3'},
+  {id: 35, name: 'mysong1.mp3'},
+  {id: 36, name: 'mysong2.mp3'},
+  {id: 37, name: 'mysong1.mp3'},
+  {id: 38, name: 'mysong2.mp3'},
+  {id: 39, name: 'mysong1.mp3'},
+];
+
 export const blocks = [
   {id: 1, color: colors.first_13_weeksColor},
   {id: 2, color: colors.first_13_weeksColor},

@@ -1,65 +1,3 @@
-// import React, {Component} from 'react';
-// import {
-//   View,
-//   TouchableOpacity,
-//   Alert,
-//   StyleSheet,
-//   Button,
-//   Text,
-// } from 'react-native';
-
-// import colors from '../configs/MyColors';
-
-// class FloatingActionButton extends Component {
-//   onTouchEvent = () => {
-//     Alert.alert('FAB Clicked');
-//   };
-//   render() {
-//     return (
-//       <View>
-//         <TouchableOpacity
-//           style={[styles.floatButtonView, styles.shadowEffect1]}
-//           onPress={this.onTouchEvent}>
-//           <View>
-//             <Text
-//               style={{
-//                 color: colors.logoTintColor,
-//                 fontWeight: 'bold',
-//                 fontSize: 25,
-//               }}>
-//               +
-//             </Text>
-//           </View>
-//         </TouchableOpacity>
-//       </View>
-//     );
-//   }
-// }
-
-// const styles = StyleSheet.create({
-//   floatButtonView: {
-//     width: 60,
-//     height: 60,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: colors.primaryColor,
-//     borderRadius: 60 / 2,
-//   },
-//   shadowEffect1: {
-//     shadowColor: '#000',
-//     shadowOffset: {
-//       width: 0,
-//       height: 1,
-//     },
-//     shadowOpacity: 0.22,
-//     shadowRadius: 2.22,
-//     elevation: 5,
-
-//   },
-// });
-
-// export default FloatingActionButton;
-
 import React, {useState} from 'react';
 import {
   Button,
@@ -129,14 +67,14 @@ const FloatingActionButton = () => {
             style={{
               color: colors.logoTintColor,
               fontWeight: 'bold',
-              fontSize: 25,
+              fontSize: 24,
             }}>
             +
           </Text>
         </TouchableOpacity>
       </View>
       <Modal visible={isModalShown} transparent={true} animationType="slide">
-        <View style={[styles.modalBottomView, styles.shadowEffect1, {}]}>
+        <View style={[styles.modalBottomView]}>
           <FlatList
             // onPress={() => {}}
             showsVerticalScrollIndicator={false}

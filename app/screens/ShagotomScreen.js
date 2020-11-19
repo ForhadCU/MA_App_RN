@@ -29,7 +29,10 @@ const ShagotomScreen = ({navigation}) => {
       <HorizontalLine />
       <View style={[styles.containerBottom]}>
         <TouchableOpacity onPress={goTo}>
+          <View style={{height: 50, width: 90, justifyContent: 'center', alignItems: 'center'}}>
+
           <Text style={[styles.buttonNextText]}>পরবর্তী</Text>
+          </View>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -58,8 +61,8 @@ const styles = StyleSheet.create({
   },
   containerBottom: {
     position: 'absolute',
-    bottom: 18,
-    right: 25,
+    bottom: 0,
+    right: 0,
   },
   containerHorizontalLine: {},
   pagerText: {
