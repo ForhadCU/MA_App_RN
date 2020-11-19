@@ -1,6 +1,6 @@
 import colors from '../configs/MyColors';
 
-export const menuList = [
+export const dataMenuList = [
   {name: 'প্রেগন্যান্সি শেষ করুন', id: 1},
   {name: 'পূর্বের ইতিহাস', id: 2},
   {name: 'এপটি শেয়ার করুন', id: 3},
@@ -9,28 +9,53 @@ export const menuList = [
   {name: 'Dismiss', id: 6},
 ];
 
-export const currentData = [
-  {id: 1, text: 'One week running..', audioName: ''},
-  {id: 2, text: 'One week running..'},
-  {id: 1, text: 'One week running..'},
-  {id: 1, text: 'One week running..'},
-  {id: 1, text: 'One week running..'},
-  {id: 1, text: 'One week running..'},
-  {id: 1, text: 'One week running..'},
-  {id: 1, text: 'One week running..'},
-  {id: 1, text: 'One week running..'},
-  {id: 1, text: 'One week running..'},
-  {id: 1, text: 'One week running..'},
-  {id: 1, text: 'One week running..'},
-  {id: 1, text: 'One week running..'},
-  {id: 1, text: 'One week running..'},
-  {id: 1, text: 'One week running..'},
-  {id: 1, text: 'One week running..'},
-  {id: 1, text: 'One week running..'},
-  {id: 1, text: 'One week running..'},
+export const dataWeeklySuggestionList = [
+  {id: 0, name: '3 তম সপ্তাহ থেকে আপডেট দেওয়া হবে... '},
+  {id: 1, name: '3 তম সপ্তাহ থেকে আপডেট দেওয়া হবে... '},
+  {id: 2, name: 'এখন 3 তম সপ্তাহ চলতেছে.....'},
+  {id: 3, name: 'এখন 4 তম সপ্তাহ চলতেছে.....'},
+  {id: 4, name: 'এখন 5 তম সপ্তাহ চলতেছে.....'},
+  {id: 5, name: 'এখন 6 তম সপ্তাহ চলতেছে.....'},
+  {id: 6, name: 'এখন 7 তম সপ্তাহ চলতেছে.....'},
+  {id: 7, name: 'এখন 8 তম সপ্তাহ চলতেছে.....'},
+  {id: 8, name: 'এখন 9 তম সপ্তাহ চলতেছে.....'},
+  {id: 9, name: 'এখন 10 তম সপ্তাহ চলতেছে.....'},
+  {id: 10, name: 'এখন 11 তম সপ্তাহ চলতেছে.....'},
+  {id: 11, name: 'এখন 12 তম সপ্তাহ চলতেছে.....'},
+  {id: 12, name: 'এখন 13 তম সপ্তাহ চলতেছে.....'},
+  {id: 13, name: 'এখন 14 তম সপ্তাহ চলতেছে.....'},
+
+
+  {id: 14, name: 'এখন 15 তম সপ্তাহ চলতেছে.....'},
+  {id: 15, name: 'এখন 16 তম সপ্তাহ চলতেছে.....'},
+  {id: 16, name: 'এখন 17 তম সপ্তাহ চলতেছে.....'},
+  {id: 17, name: 'এখন 18 তম সপ্তাহ চলতেছে.....'},
+  {id: 18, name: 'এখন 19 তম সপ্তাহ চলতেছে.....'},
+  {id: 19, name: 'এখন 20 তম সপ্তাহ চলতেছে.....'},
+  {id: 20, name: 'এখন 21 তম সপ্তাহ চলতেছে.....'},
+  {id: 21, name: 'এখন 22 তম সপ্তাহ চলতেছে.....'},
+  {id: 22, name: 'এখন 23 তম সপ্তাহ চলতেছে.....'},
+  {id: 23, name: 'এখন 24 তম সপ্তাহ চলতেছে.....'},
+  {id: 24, name: 'এখন 25 তম সপ্তাহ চলতেছে.....'},
+  {id: 25, name: 'এখন 26 তম সপ্তাহ চলতেছে.....'},
+  {id: 26, name: 'এখন 27 তম সপ্তাহ চলতেছে.....'},
+
+  {id: 27, name: 'এখন 28 তম সপ্তাহ চলতেছে.....'},
+  {id: 28, name: 'এখন 29 তম সপ্তাহ চলতেছে.....'},
+  {id: 29, name: 'এখন 30 তম সপ্তাহ চলতেছে.....'},
+  {id: 30, name: 'এখন 31 তম সপ্তাহ চলতেছে.....'},
+  {id: 31, name: 'এখন 32 তম সপ্তাহ চলতেছে.....'},
+  {id: 32, name: 'এখন 33 তম সপ্তাহ চলতেছে.....'},
+  {id: 33, name: 'এখন 34 তম সপ্তাহ চলতেছে.....'},
+  {id: 34, name: 'এখন 35 তম সপ্তাহ চলতেছে.....'},
+  {id: 35, name: 'এখন 36 তম সপ্তাহ চলতেছে.....'},
+  {id: 36, name: 'এখন 37 তম সপ্তাহ চলতেছে.....'},
+  {id: 37, name: 'এখন 38 তম সপ্তাহ চলতেছে.....'},
+  {id: 38, name: 'এখন 39 তম সপ্তাহ চলতেছে.....'},
+  {id: 39, name: 'এখন 40 তম সপ্তাহ চলতেছে.....'},
 ];
 
-export const songsList = [
+export const dataWeeklyAudioList = [
   {id: 0, name: 'mysong2.mp3'},
   {id: 1, name: 'mysong1.mp3'},
   {id: 2, name: 'mysong2.mp3'},
@@ -76,7 +101,7 @@ export const songsList = [
   {id: 39, name: 'mysong1.mp3'},
 ];
 
-export const blocks = [
+export const dataBlocksList = [
   {id: 1, color: colors.first_13_weeksColor},
   {id: 2, color: colors.first_13_weeksColor},
   {id: 3, color: colors.first_13_weeksColor},

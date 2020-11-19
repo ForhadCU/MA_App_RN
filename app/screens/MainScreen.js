@@ -16,7 +16,12 @@ import Blocks from '../components/Blocks';
 import FloatingActionButton from '../components/FloatingActionButton';
 // import async from '@react-native-async-storage/async-storage'
 import GrayHorizontalLinne from '../components/GrayHorizontalLine';
-import {blocks, menuList, songsList} from '../configs/allData';
+import {
+  dataBlocksList,
+  dataMenuList,
+  dataWeeklyAudioList,
+  dataWeeklySuggestionList,
+} from '../configs/allData';
 import colors from '../configs/MyColors';
 import Sound from 'react-native-sound';
 
@@ -51,7 +56,7 @@ const MainScreen = ({navigation}) => {
     } else if (runningWeeks < 2) {
       return 'empty';
     } else {
-      return songsList[runningWeeks].name;
+      return dataWeeklyAudioList[runningWeeks].name;
     }
   }
 
@@ -111,7 +116,24 @@ const MainScreen = ({navigation}) => {
   function onMenuTouch() {
     setIsModalShown(true);
   }
-  console.log('log');
+
+  function getWeeklySuggestion() {
+    if (runningWeeks == null) {
+      return (
+        <Text style={[{marginTop: 5, color: 'gray', flex: 20}]}>
+          Loading...
+        </Text>
+      );
+    } else {
+      return (
+        <Text style={[{marginTop: 5, color: 'gray', flex: 20}]}>
+          {dataWeeklySuggestionList[runningWeeks].name}
+        </Text>
+      );
+    }
+  }
+
+  // console.log('MainScreen Func() calling..');
   return (
     <SafeAreaView style={[styles.container]}>
       {/* ActionBar */}
@@ -183,7 +205,7 @@ const MainScreen = ({navigation}) => {
               )}
               <FlatList
                 horizontal={true}
-                data={blocks}
+                data={dataBlocksList}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({item}) => {
                   if (item.id <= readWeeks()) {
@@ -271,13 +293,9 @@ const MainScreen = ({navigation}) => {
           />
         </View>
 
-        <View
-          style={{flex: 0.65, justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{flex: 0.65, justifyContent: 'center'}}>
           <View style={[styles.horizontalLine, {flex: 1}]} />
-          <Text style={[{marginTop: 5, color: 'gray', flex: 20}]}>
-            শিশুটি এখনও শীমের বিচির মত। তার আঙ্গুল, পায়ের পাতা, শাসনালী ও
-            জননাঙ্গ তৈরি হয়েছে।
-          </Text>
+          {getWeeklySuggestion()}
         </View>
       </View>
 
@@ -310,7 +328,7 @@ const MainScreen = ({navigation}) => {
                 // onPress={() => {
                 //   setIsModalShown(false);
                 // }}
-                data={menuList}
+                data={dataMenuList}
                 renderItem={({item}) => (
                   <TouchableWithoutFeedback
                     onPress={() => actionOnRow(item.id)}>
